@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openenv-gridguardian"
+version = "0.1.0"
+description = "GridGuardian climate-resilience microgrid environment for OpenEnv"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core[core]>=0.2.2",
+    "fastapi>=0.115.0",
+    "openai>=1.35.0",
+    "pydantic>=2.7.0",
+    "requests>=2.31.0",
+    "uvicorn[standard]>=0.30.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+server = "server.app:main"
+openenv-server = "server.app:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["server"]
+py-modules = [
+    "baseline",
+    "client",
+    "compat",
+    "graders",
+    "inference",
+    "models",
+    "planner",
+    "tasks",
+    "validate_submission",
+    "verify_graders",
+]
