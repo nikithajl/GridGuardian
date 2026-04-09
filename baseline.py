@@ -339,11 +339,30 @@ def plan_action_local(env: GridGuardianEnvironment, task: TaskSpec) -> GridActio
     return best_action or initial_candidates[0]
 
 
+def candidate_actions_from_env(
+    env: GridGuardianEnvironment,
+    task: TaskSpec,
+    limit: int = 4,
+) -> list[GridAction]:
+    return _candidate_actions_for_local_env(env, task)[:limit]
+
+
 def plan_action_from_state(state: GridState, task: TaskSpec) -> GridAction:
     env = GridGuardianEnvironment(default_task_id=task.task_id)
     env._task = task
     env._state = state.model_copy(deep=True)
     return plan_action_local(env, task)
+
+
+def candidate_actions_from_state(
+    state: GridState,
+    task: TaskSpec,
+    limit: int = 4,
+) -> list[GridAction]:
+    env = GridGuardianEnvironment(default_task_id=task.task_id)
+    env._task = task
+    env._state = state.model_copy(deep=True)
+    return candidate_actions_from_env(env, task, limit=limit)
 
 
 def run_task_locally(task_id: str) -> EpisodeResult:

@@ -83,10 +83,23 @@ Each task has:
 - `server/gridguardian_environment.py`: environment simulation
 - `server/app.py`: OpenEnv/FastAPI app entrypoint
 - `baseline.py`: baseline planners and local evaluation helpers
-- `planner.py`: optional OpenAI-client note generator for inference
+- `planner.py`: OpenAI-client candidate selector for inference, with deterministic fallback
 - `inference.py`: required root-level inference script
 - `verify_graders.py`: local grader verification
 - `validate_submission.py`: local submission-format validation
+
+## Baseline Scores
+
+Deterministic baseline scores with the built-in beam-search controller:
+
+- `heatwave_hospital_cooling`: `0.9605`
+- `monsoon_shelter_power`: `0.9735`
+- `wildfire_smoke_clinic`: `0.9526`
+- `flood_pumps_and_shelters`: `0.9559`
+- `post_cyclone_emergency_power`: `0.9203`
+- `cold_snap_warming_center`: `0.9558`
+
+When `HF_TOKEN` is provided, `inference.py` uses the OpenAI client to rank candidate control actions at each step. If no LLM credentials are available, it falls back to the same deterministic beam-search policy used for the scores above.
 
 ## Local Run
 

@@ -3,7 +3,13 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from baseline import detect_base_url, plan_action_from_state, plan_action_local
+from baseline import (
+    candidate_actions_from_env,
+    candidate_actions_from_state,
+    detect_base_url,
+    plan_action_from_state,
+    plan_action_local,
+)
 from client import GridGuardianClient
 from planner import MODEL_NAME, HybridPlanner
 from server.gridguardian_environment import GridGuardianEnvironment
@@ -74,10 +80,18 @@ def main() -> None:
 
                 while observation is not None and not observation.done:
                     if env is not None:
+                        candidate_actions = candidate_actions_from_env(env, task)
                         base_action = plan_action_local(env, task)
                     else:
-                        base_action = plan_action_from_state(remote_client.state(), task)
-                    decision = planner.choose_action(observation, task, base_action=base_action)
+                        current_state = remote_client.state()
+                        candidate_actions = candidate_actions_from_state(current_state, task)
+                        base_action = plan_action_from_state(current_state, task)
+                    decision = planner.choose_action(
+                        observation,
+                        task,
+                        base_action=base_action,
+                        candidate_actions=candidate_actions,
+                    )
                     action = decision.action
                     if remote_client:
                         observation = remote_client.step(action)
