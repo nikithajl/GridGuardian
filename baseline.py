@@ -363,26 +363,27 @@ def run_task_locally(task_id: str) -> EpisodeResult:
 
 def run_task_remote(task_id: str, base_url: str) -> EpisodeResult:
     task = get_task(task_id)
-    client = GridGuardianClient(base_url=base_url)
-    observation = client.reset(task_id=task_id)
-    total_reward = 0.0
-    steps = 0
+    with GridGuardianClient(base_url=base_url) as client:
+        observation = client.reset(task_id=task_id)
+        total_reward = 0.0
+        steps = 0
 
-    while not observation.done:
-        action = plan_action(observation, task)
-        observation = client.step(action)
-        total_reward += float(observation.reward or 0.0)
-        steps += 1
+        while not observation.done:
+            action = plan_action(observation, task)
+            observation = client.step(action)
+            total_reward += float(observation.reward or 0.0)
+            steps += 1
 
-    grade = observation.metadata.get("grade", {})
-    return EpisodeResult(
-        task_id=task.task_id,
-        task_title=task.title,
-        total_reward=round(total_reward, 4),
-        final_score=round(float(grade.get("score", 0.0)), 4),
-        steps=steps,
-        terminal_grade=grade,
-    )
+        final_state = client.state()
+        grade = final_state.terminal_grade or observation.metadata.get("grade", {})
+        return EpisodeResult(
+            task_id=task.task_id,
+            task_title=task.title,
+            total_reward=round(total_reward, 4),
+            final_score=round(float(grade.get("score", 0.0)), 4),
+            steps=steps,
+            terminal_grade=grade,
+        )
 
 
 def run_all_tasks(base_url: str | None = None) -> list[EpisodeResult]:

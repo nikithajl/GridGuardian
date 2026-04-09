@@ -66,8 +66,8 @@ def _validate_inference_output(stdout: str) -> None:
                 raise SystemExit("Mismatch between emitted [STEP] count and [END] steps value")
             if ended_rewards != current_rewards:
                 raise SystemExit("Mismatch between step rewards and [END] rewards list")
-            if not 0.0 <= score <= 1.0:
-                raise SystemExit("Final score must be in [0, 1]")
+            if not 0.0 < score < 1.0:
+                raise SystemExit("Final score must be strictly between 0 and 1")
             started = False
             current_steps = 0
             current_rewards = []
@@ -84,10 +84,12 @@ def main() -> None:
     if missing:
         raise SystemExit(f"Missing required files: {', '.join(missing)}")
 
+    print("[validate] running grader verification...", flush=True)
     result = subprocess.run([sys.executable, "verify_graders.py"], check=False)
     if result.returncode != 0:
         raise SystemExit("verify_graders.py failed")
 
+    print("[validate] running inference script format check...", flush=True)
     inference = subprocess.run(
         [sys.executable, "inference.py"],
         check=False,

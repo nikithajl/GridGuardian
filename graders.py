@@ -5,9 +5,15 @@ from typing import Any
 from models import GridState
 from tasks import TaskSpec, get_task
 
+SCORE_EPSILON = 1e-4
+
 
 def _clip(value: float) -> float:
     return max(0.0, min(1.0, value))
+
+
+def _strict_score(value: float) -> float:
+    return max(SCORE_EPSILON, min(1.0 - SCORE_EPSILON, value))
 
 
 def _repair_completion(task: TaskSpec, state: GridState) -> float:
@@ -42,7 +48,7 @@ def grade_episode(state: GridState, task: TaskSpec | None = None) -> dict[str, A
         + weights.get("repair", 0.0) * repair_score
         + weights.get("reserve", 0.0) * reserve_score
     )
-    score = _clip(score)
+    score = _strict_score(_clip(score))
 
     passed = critical_service >= 0.85 and score >= 0.75
     summary = (
