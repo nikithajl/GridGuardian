@@ -1,8 +1,8 @@
 ---
 title: GridGuardian
-emoji: ""
-colorFrom: teal
-colorTo: orange
+emoji: "⚡"
+colorFrom: blue
+colorTo: green
 sdk: docker
 app_port: 8000
 tags:
@@ -128,4 +128,3 @@ If `HF_TOKEN` is not provided, inference falls back to a deterministic local pol
 - `inference.py` emits `[START]`, `[STEP]`, and `[END]` lines in the required single-line format.
 - `validate_submission.py` checks required files, grader score range, and inference stdout format.
 - All task scores are constrained to `[0.0, 1.0]`.
-
