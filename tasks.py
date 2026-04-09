@@ -85,9 +85,9 @@ HARD_WEIGHTS = {
 
 
 TASKS: dict[str, TaskSpec] = {
-    "heatwave_peak_shaving": TaskSpec(
-        task_id="heatwave_peak_shaving",
-        title="Heatwave Peak Shaving for a Community Microgrid",
+    "heatwave_hospital_cooling": TaskSpec(
+        task_id="heatwave_hospital_cooling",
+        title="Heatwave Hospital and Cooling Center",
         difficulty="easy",
         summary="Protect a hospital wing and cooling center during an evening heatwave.",
         objective="Keep critical services online, shift load out of the peak, and avoid burning through the battery too early.",
@@ -113,9 +113,9 @@ TASKS: dict[str, TaskSpec] = {
             IntervalProfile("22:00", 245.0, 0.0, 110.0, 105.0, 0.36, 0.44, 120.0, "medium", "Demand tapers but is still elevated.", "Finish the episode without an avoidable shortfall."),
         ),
     ),
-    "monsoon_shelter_rebalancing": TaskSpec(
-        task_id="monsoon_shelter_rebalancing",
-        title="Monsoon Shelter Rebalancing",
+    "monsoon_shelter_power": TaskSpec(
+        task_id="monsoon_shelter_power",
+        title="Monsoon Shelter and Pharmacy Power",
         difficulty="easy",
         summary="Manage a shelter and pharmacy microgrid through a humid monsoon evening.",
         objective="Use midday renewable surplus to prepare for evening shelter demand while keeping community disruption minimal.",
@@ -141,9 +141,9 @@ TASKS: dict[str, TaskSpec] = {
             IntervalProfile("22:00", 205.0, 0.0, 95.0, 115.0, 0.31, 0.40, 110.0, "medium", "Demand softens but support services remain active.", "Close the day efficiently without wasting reserve."),
         ),
     ),
-    "smoke_event_resilience": TaskSpec(
-        task_id="smoke_event_resilience",
-        title="Wildfire Smoke Resilience with Battery Cooling Fault",
+    "wildfire_smoke_clinic": TaskSpec(
+        task_id="wildfire_smoke_clinic",
+        title="Wildfire Smoke Clinic and Clean-Air Shelter",
         difficulty="medium",
         summary="Wildfire smoke cuts solar output while a battery cooling fault limits throughput.",
         objective="Repair the battery bottleneck early and protect a clinic and clean-air shelter during the smoke surge.",
@@ -172,9 +172,9 @@ TASKS: dict[str, TaskSpec] = {
             FaultSpec("battery_cooling", "Battery thermal control is degraded, limiting throughput.", "battery", 0.60, 2),
         ),
     ),
-    "flood_pump_coordination": TaskSpec(
-        task_id="flood_pump_coordination",
-        title="Flood Pump Coordination",
+    "flood_pumps_and_shelters": TaskSpec(
+        task_id="flood_pumps_and_shelters",
+        title="Flood Pumps, Shelter, and Clinic Coordination",
         difficulty="medium",
         summary="Coordinate pumping stations, shelters, and a clinic while a grid-tie fault derates imports.",
         objective="Repair the feeder quickly, keep pumps online through the evening surge, and preserve storage for the highest-risk interval.",
@@ -203,9 +203,9 @@ TASKS: dict[str, TaskSpec] = {
             FaultSpec("grid_tie", "A feeder fault reduces import capacity until cleared.", "grid", 0.65, 1),
         ),
     ),
-    "cyclone_islanding": TaskSpec(
-        task_id="cyclone_islanding",
-        title="Cyclone Islanding for Shelter, Water, and Emergency Services",
+    "post_cyclone_emergency_power": TaskSpec(
+        task_id="post_cyclone_emergency_power",
+        title="Post-Cyclone Emergency Power",
         difficulty="hard",
         summary="A coastal microgrid is under post-cyclone stress with feeder damage and a degraded diesel generator.",
         objective="Restore import capacity quickly, ration diesel sensibly, and carry shelters and pumps through the evening emergency peak.",
@@ -235,9 +235,9 @@ TASKS: dict[str, TaskSpec] = {
             FaultSpec("diesel_filter", "Generator intake filters are clogged, derating dispatch capacity.", "diesel", 0.75, 1),
         ),
     ),
-    "cold_snap_blackstart": TaskSpec(
-        task_id="cold_snap_blackstart",
-        title="Cold Snap Blackstart Coordination",
+    "cold_snap_warming_center": TaskSpec(
+        task_id="cold_snap_warming_center",
+        title="Cold Snap Warming Center Recovery",
         difficulty="hard",
         summary="A cold snap drives heating demand while the site is recovering from a partial blackstart with two degraded assets.",
         objective="Recover storage and diesel flexibility early enough to cover the heating peak while protecting a clinic and warming center.",
@@ -269,7 +269,7 @@ TASKS: dict[str, TaskSpec] = {
     ),
 }
 
-DEFAULT_TASK_ID = "heatwave_peak_shaving"
+DEFAULT_TASK_ID = "heatwave_hospital_cooling"
 
 
 def get_task(task_id: str) -> TaskSpec:

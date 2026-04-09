@@ -23,7 +23,7 @@ GridGuardian is an OpenEnv environment for operating a climate-resilience microg
 
 - Domain: climate and infrastructure operations
 - Format: deterministic, multi-step decision environment
-- Output score: normalized to the range `[0.0, 1.0]`
+- Output score: strictly constrained to the range `(0.0, 1.0)`
 - Root inference script: `inference.py`
 - OpenEnv manifest: `openenv.yaml`
 
@@ -31,12 +31,12 @@ GridGuardian is an OpenEnv environment for operating a climate-resilience microg
 
 This submission includes 6 tasks:
 
-1. `heatwave_peak_shaving` (`easy`)
-2. `monsoon_shelter_rebalancing` (`easy`)
-3. `smoke_event_resilience` (`medium`)
-4. `flood_pump_coordination` (`medium`)
-5. `cyclone_islanding` (`hard`)
-6. `cold_snap_blackstart` (`hard`)
+1. `heatwave_hospital_cooling` - Heatwave Hospital and Cooling Center (`easy`)
+2. `monsoon_shelter_power` - Monsoon Shelter and Pharmacy Power (`easy`)
+3. `wildfire_smoke_clinic` - Wildfire Smoke Clinic and Clean-Air Shelter (`medium`)
+4. `flood_pumps_and_shelters` - Flood Pumps, Shelter, and Clinic Coordination (`medium`)
+5. `post_cyclone_emergency_power` - Post-Cyclone Emergency Power (`hard`)
+6. `cold_snap_warming_center` - Cold Snap Warming Center Recovery (`hard`)
 
 Each task has:
 
@@ -127,4 +127,4 @@ If `HF_TOKEN` is not provided, inference falls back to a deterministic local pol
 
 - `inference.py` emits `[START]`, `[STEP]`, and `[END]` lines in the required single-line format.
 - `validate_submission.py` checks required files, grader score range, and inference stdout format.
-- All task scores are constrained to `[0.0, 1.0]`.
+- All task scores are constrained to `(0.0, 1.0)`.
