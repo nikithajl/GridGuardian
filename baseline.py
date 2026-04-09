@@ -339,6 +339,13 @@ def plan_action_local(env: GridGuardianEnvironment, task: TaskSpec) -> GridActio
     return best_action or initial_candidates[0]
 
 
+def plan_action_from_state(state: GridState, task: TaskSpec) -> GridAction:
+    env = GridGuardianEnvironment(default_task_id=task.task_id)
+    env._task = task
+    env._state = state.model_copy(deep=True)
+    return plan_action_local(env, task)
+
+
 def run_task_locally(task_id: str) -> EpisodeResult:
     task = get_task(task_id)
     env = GridGuardianEnvironment(default_task_id=task_id)
@@ -369,7 +376,8 @@ def run_task_remote(task_id: str, base_url: str) -> EpisodeResult:
         steps = 0
 
         while not observation.done:
-            action = plan_action(observation, task)
+            state = client.state()
+            action = plan_action_from_state(state, task)
             observation = client.step(action)
             total_reward += float(observation.reward or 0.0)
             steps += 1
