@@ -32,11 +32,17 @@ GridGuardian is an OpenEnv environment for operating a climate-resilience microg
 This submission includes 6 tasks:
 
 1. `heatwave_hospital_cooling` - Heatwave Hospital and Cooling Center (`easy`)
+   This task is about keeping a hospital wing and a public cooling center powered during a heatwave. Demand rises sharply in the evening, so the agent has to save battery for the hardest hours instead of spending it too early.
 2. `monsoon_shelter_power` - Monsoon Shelter and Pharmacy Power (`easy`)
+   This one is about supporting a storm shelter and pharmacy during a monsoon day. The idea is to use the easier daytime window to prepare for the evening, when people need shelter services, refrigeration, and backup power more urgently.
 3. `wildfire_smoke_clinic` - Wildfire Smoke Clinic and Clean-Air Shelter (`medium`)
+   This task simulates wildfire smoke reducing solar generation while a battery cooling fault limits battery performance. The agent needs to repair the battery issue early and still protect a clinic and a clean-air shelter as conditions worsen.
 4. `flood_pumps_and_shelters` - Flood Pumps, Shelter, and Clinic Coordination (`medium`)
+   This is a flood-response task where drainage pumps, shelters, and a clinic all need power, but the grid connection is partially damaged. The agent must prioritize pump operations and repair the feeder quickly so the system can survive the evening flood peak.
 5. `post_cyclone_emergency_power` - Post-Cyclone Emergency Power (`hard`)
+   This is a harder disaster-response scenario after a cyclone. Shelters, water systems, and emergency services all depend on the microgrid, while both the feeder and diesel system are degraded, so the agent has to manage repairs and scarce energy very carefully.
 6. `cold_snap_warming_center` - Cold Snap Warming Center Recovery (`hard`)
+   This task is about a severe cold snap after a partial blackstart. Heating demand is very high, and the agent must keep a clinic and warming center online while recovering two damaged assets early enough to survive the evening heating peak.
 
 Each task has:
 
